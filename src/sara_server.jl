@@ -174,7 +174,7 @@ end
     upper_bounds = convert.(Float64, dict["upper_bounds"])
     maxiter = convert(Int64, dict["maxiter"])
     verbose = convert(Bool, dict["verbose"])
-    composition_mesh_points = convert.(Float64, dict["composition_mesh_points"])
+    composition_mesh_points = [convert.(Float64, i) for i in dict["composition_mesh_points"])]
     server_state.gradient_policy = SARA.CHESS_Spring_2025_sampling(lower_bounds, upper_bounds,
                   server_state.relevant_T,
                   log_composition_proximity_likelihood = server_state.log_composition_proximity_likelihood,
@@ -198,7 +198,7 @@ end
     maximize = convert(Bool, dict["maximize"])
     maxiter = convert(Int64, dict["maxiter"])
     verbose = convert(Bool, dict["verbose"])
-    composition_mesh_points = convert.(Float64, dict["composition_mesh_points"])
+    composition_mesh_points = [convert.(Float64, i) for i in dict["composition_mesh_points"])]
     acquisition = SARA.log_ei_acquisition(best_f, maximize=maximize)
     server_state.xshift_policy = SARA.CHESS_Spring_2025_sampling(
                 lower_bounds, upper_bounds, server_state.relevant_T,
