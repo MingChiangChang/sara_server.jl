@@ -337,7 +337,6 @@ end
                                                   allowed_conditions,
                                                   server_state.xshift_policy)
 
-    println("Next cond: ", next_cond)
     d = Dict{String, Any}()
     d["next_cond"] = next_cond
     d
@@ -349,6 +348,8 @@ end
     next_cond = convert.(Float64, dict["next_cond"])
     allowed_compositions = reduce(hcat, [convert.(Float64, i) for i in dict["allowed_compositions"]])'
     next_cond = SARA.project_on_available_compositions(next_cond, allowed_compositions)
+
+    println("Next cond: ", next_cond)
 
     d = Dict{String, Any}()
     d["next_cond"] = next_cond
