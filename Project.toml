@@ -6,6 +6,7 @@ version = "0.1.0"
 [deps]
 CrystalShift = "fb120844-f04e-4a6b-a6eb-278194263097"
 CrystalTree = "9c8cff83-2ad6-4961-8214-2a9086396538"
+FFMPEG = "c87230d0-a227-11e9-1b43-d7ebe4e7570a"
 GaussianDistributions = "bca5bafc-9f2e-496c-8c30-2a4e9dcd8e59"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"

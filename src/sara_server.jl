@@ -1,4 +1,3 @@
-# module sara_server
 using Oxygen
 using HTTP
 using JSON
@@ -77,6 +76,26 @@ end
 end
 
 
+@put "/Sara_get_temperature_profile_CHESS_Spring_2025" function (req::HTTP.Request)
+    dict = JSON.parse(String(req.body))
+    dT = convert(Float64, dict["dT"])
+    dx = convert(Float64, dict["dx"])
+    server_state.SARA_Tprofile = SARA.get_temperature_profile_CHESS_Spring_2025(dT, dx)
+
+    return
+end
+
+
+@put "/SARA_Crystal_get_temperature_profile_CHESS_Spring_2025" function (req::HTTP.Request)
+    dict = JSON.parse(String(req.body))
+    dT = convert(Float64, dict["dT"])
+    dx = convert(Float64, dict["dx"])
+    server_state.SARA_Crystal_Tprofile = SARA_Crystal.get_temperature_profile_CHESS_Spring_2025(dT, dx)
+
+    return 
+end
+
+
 @put "/Sara_get_relevant_T" function (req::HTTP.Request)
     dict = JSON.parse(String(req.body))
     c_min = convert(Float64, dict["c_min"])
@@ -145,6 +164,28 @@ end
                 verbose = verbose,
                 acquisition = acquisition,
                 log_composition_proximity_likelihood = server_state.log_composition_proximity_likelihood)
+    return 
+end
+
+
+@put "/Sara_CHESS_Spring_2025_sampling_xshift" function (req::HTTP.Request)
+    dict = JSON.parse(String(req.body))
+
+    lower_bounds = convert.(Float64, dict["lower_bounds"])
+    upper_bounds = convert.(Float64, dict["upper_bounds"])
+    best_f = convert(Float64, dict["best_f"])
+    maximize = convert(Bool, dict["maximize"])
+    maxiter = convert(Int64, dict["maxiter"])
+    verbose = convert(Bool, dict["verbose"])
+    composition_mesh_points = convert.(Float64, dict["composition_mesh_points"])
+    acquisition = SARA.log_ei_acquisition(best_f, maximize=maximize)
+    server_state.xshift_policy = SARA.CHESS_Spring_2025_sampling(
+                lower_bounds, upper_bounds, server_state.relevant_T,
+                maxiter = maxiter,
+                verbose = verbose,
+                acquisition = acquisition,
+                log_composition_proximity_likelihood = server_state.log_composition_proximity_likelihood,
+               )
     return 
 end
 
@@ -412,9 +453,9 @@ end
     # println(server_state.cs[phase_idx])
     conditions, expected_fraction, expected_fraction_uncertainty, phase_fraction = SARA_Crystal.expected_fraction_to_global(
                                                                                                                             x, Qval, Y, server_state.cs[phase_idx],
-                                             server_state.tree_search_settings,
-                                             server_state.stripe_to_global_settings,
-                                             server_state.relevant_T)
+                         server_state.tree_search_settings,
+                         server_state.stripe_to_global_settings,
+                         server_state.relevant_T)
     # heatmap(1:size(expected_fraction,2),
     #         getindex.(conditions, 1),
     #         expected_fraction, dpi = 300,
@@ -430,7 +471,7 @@ end
                     getproperty.(server_state.cs[phase_idx], :name)),
            yflip=true, xflip=true)
     plot!(xlabel="Temperature (C)")
-    savefig("$(lpad(server_state.iter, 3, "0")).png")
+    savefig("iter_$(lpad(server_state.iter, 3, "0")).png")
 
     d = Dict{String, Any}() 
     d["conditions"] = conditions
