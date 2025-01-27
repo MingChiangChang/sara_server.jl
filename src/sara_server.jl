@@ -168,6 +168,27 @@ end
 end
 
 
+@put "/Sara_CHESS_Spring_2025_sampling_gradient" function (req::HTTP.Request)
+    dict = JSON.parse(String(req.body))
+    lower_bounds = convert.(Float64, dict["lower_bounds"])
+    upper_bounds = convert.(Float64, dict["upper_bounds"])
+    maxiter = convert(Int64, dict["maxiter"])
+    verbose = convert(Bool, dict["verbose"])
+    composition_mesh_points = convert.(Float64, dict["composition_mesh_points"])
+    server_state.gradient_policy = SARA.CHESS_Spring_2025_sampling(lower_bounds, upper_bounds,
+                  server_state.relevant_T,
+                  log_composition_proximity_likelihood = server_state.log_composition_proximity_likelihood,
+                  maxiter=maxiter,
+                  verbose=verbose,
+                  acquisition=SARA.log_uncertainty_acquisition(),
+                  composition_mesh_points = composition_mesh_points
+                  )
+
+    return
+end
+
+
+
 @put "/Sara_CHESS_Spring_2025_sampling_xshift" function (req::HTTP.Request)
     dict = JSON.parse(String(req.body))
 
@@ -185,6 +206,7 @@ end
                 verbose = verbose,
                 acquisition = acquisition,
                 log_composition_proximity_likelihood = server_state.log_composition_proximity_likelihood,
+                composition_mesh_points = composition_mesh_points
                )
     return 
 end
