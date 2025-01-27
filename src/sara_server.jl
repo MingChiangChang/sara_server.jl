@@ -497,9 +497,9 @@ end
 
     d = Dict{String, Any}() 
     d["conditions"] = conditions
-    d["xshift_activation"] = expected_fraction
-    d["xshift_activation_uncert"] = expected_fraction_uncertainty
-    d["xshift_phasefraction"] = phase_fraction
+    d["xshift_activation"] = [v for v in eachrow(expected_fraction)]
+    d["xshift_activation_uncert"] = [v for v in eachrow(expected_fraction_uncertainty)]
+    d["xshift_phasefraction"] = [v for v in eachrow(phase_fraction)]
     return d
 end
 
