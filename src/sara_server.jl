@@ -489,8 +489,8 @@ end
     heatmap(t,# size(expected_fraction,1),
             1:size(expected_fraction,2),
             expected_fraction', dpi = 300,
-            yticks=(collect(1:length(phase_idx)),
-                    getproperty.(server_state.cs[phase_idx], :name)),
+            yticks=(collect(1:length(phase_idx)+1),
+                    vcat(getproperty.(server_state.cs[phase_idx], :name), "Amorphous")),
            yflip=true, xflip=true)
     plot!(xlabel="Temperature (C)")
     savefig("iter_$(lpad(server_state.iter, 3, "0")).png")
