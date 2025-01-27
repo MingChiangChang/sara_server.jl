@@ -491,7 +491,7 @@ end
            yflip=true, xflip=true)
     plot!(xlabel="Temperature (C)")
     savefig("iter_$(lpad(server_state.iter, 3, "0")).png")
-    server.iter += 1
+    server_state.iter += 1
 
     println("conditions", conditions)
     println("expected_fraction", expected_fraction)
