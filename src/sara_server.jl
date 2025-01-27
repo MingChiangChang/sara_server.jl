@@ -494,6 +494,10 @@ end
            yflip=true, xflip=true)
     plot!(xlabel="Temperature (C)")
     savefig("iter_$(lpad(server_state.iter, 3, "0")).png")
+    server.iter += 1
+
+    println("conditions", conditions)
+    println("expected_fraction", expected_fraction)
 
     d = Dict{String, Any}() 
     d["conditions"] = conditions
@@ -503,5 +507,5 @@ end
     return d
 end
 
-serve()
+serve(port=4200)
 # end # module sara_server
