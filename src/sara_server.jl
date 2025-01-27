@@ -47,10 +47,7 @@ global server_state = ServerState("", "", "", "", "",
     open(path, "r") do f
         server_state.cs = CrystalPhase(f, width, FixedPseudoVoigt(α))
     end
-    println(length(server_state.cs))
-    println(length(server_state.cs))
     println(server_state.cs)
-    println(length(server_state.cs))
     println(length(server_state.cs))
 
     return
@@ -340,6 +337,7 @@ end
                                                   allowed_conditions,
                                                   server_state.xshift_policy)
 
+    println("Next cond: ", next_cond)
     d = Dict{String, Any}()
     d["next_cond"] = next_cond
     d
@@ -485,7 +483,6 @@ end
     #                 getproperty.(server_state.cs[phase_idx], :name)))
 
     t = reverse(getindex.(conditions, 1))
-    println(t)
     heatmap(t,# size(expected_fraction,1),
             1:size(expected_fraction,2),
             expected_fraction', dpi = 300,
