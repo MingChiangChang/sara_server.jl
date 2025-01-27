@@ -1,0 +1,14 @@
+name = "sara_server"
+uuid = "c32138f6-1d57-41f1-bd3d-9b468b1ffc04"
+authors = ["Ming-Chiang Chang <mc2663@cornell.edu>"]
+version = "0.1.0"
+
+[deps]
+CrystalShift = "fb120844-f04e-4a6b-a6eb-278194263097"
+CrystalTree = "9c8cff83-2ad6-4961-8214-2a9086396538"
+GaussianDistributions = "bca5bafc-9f2e-496c-8c30-2a4e9dcd8e59"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+Oxygen = "df9a0d86-3283-4920-82dc-4555fc0d1d8b"
+SARA = "ba38d075-ddda-45ee-9fd3-1b3d79220ed9"
+SARA_Crystal = "dda4b776-b026-4f05-b4c4-a8a6ffbc58d4"
